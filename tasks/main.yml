@@ -27,7 +27,7 @@
 
 - name: Prometheus Node Exporter binaries downloaded
   get_url:
-    url: 'https://github.com/prometheus/prometheus/releases/download/v{{ PROMETHEUS_NODE_EXPORTER_VERSION }}/{{ PROMETHEUS_NODE_EXPORTER_DIR_NAME }}.tar.gz'
+    url: 'https://github.com/prometheus/node_exporter/releases/download/v{{ PROMETHEUS_NODE_EXPORTER_VERSION }}/{{ PROMETHEUS_NODE_EXPORTER_DIR_NAME }}.tar.gz'
     dest: '/tmp/{{ PROMETHEUS_NODE_EXPORTER_DIR_NAME }}.tar.gz'
     checksum: 'sha256:{{ PROMETHEUS_NODE_EXPORTER_PACKAGE_CHECKSUM }}'
 
