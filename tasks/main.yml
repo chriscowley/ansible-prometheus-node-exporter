@@ -4,13 +4,13 @@
 # Pre-install create user, dirs
 - name: Prometheus group created
   group:
-    name: '{{ PROMETHEUS_GROUP }}'
+    name: '{{ PROMETHEUS_NODE_EXPORTER_GROUP }}'
     state: present
 
 - name: Prometheus user created
   user:
-    name: '{{ PROMETHEUS_USER }}'
-    group: '{{ PROMETHEUS_GROUP }}'
+    name: '{{ PROMETHEUS_NODE_EXPORTER_USER }}'
+    group: '{{ PROMETHEUS_NODE_EXPORTER_GROUP }}'
     createhome: false
     shell: '/sbin/nologin'
     state: 'present'
@@ -20,8 +20,8 @@
   file:
     path: '{{ item }}'
     state: 'directory'
-    owner: '{{ PROMETHEUS_USER }}'
-    group: '{{ PROMETHEUS_GROUP }}'
+    owner: '{{ PROMETHEUS_NODE_EXPORTER_USER }}'
+    group: '{{ PROMETHEUS_NODE_EXPORTER_GROUP }}'
     mode: 'u=rwx,g=rx,o='
   with_items: '{{ PROMETHEUS_NODE_EXPORTER_DIRS.values() }}'
 
@@ -35,7 +35,7 @@
   unarchive:
     src: '/tmp/{{ PROMETHEUS_NODE_EXPORTER_DIR_NAME }}.tar.gz'
     remote_src: true
-    dest: '{{ PROMETHEUS_DIRS.PROMETHEUS_BINARIES_DIR }}/{{ PROMETHEUS_NODE_EXPORTER_DIR_NAME }}'
+    dest: '{{ PROMETHEUS_NODE_EXPORTER_DIRS.PROMETHEUS_BINARIES_DIR }}/{{ PROMETHEUS_NODE_EXPORTER_DIR_NAME }}'
 
 - name: Prometheus Node Exporter systemd unit file templated
   template:
