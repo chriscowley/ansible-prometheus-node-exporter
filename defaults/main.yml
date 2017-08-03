@@ -1,0 +1,26 @@
+---
+# defaults file for ansible-prometheus-node-exporter
+
+PROMETHEUS_NODE_EXPORTER_VERSION: '0.14.0'
+PROMETHEUS_NODE_EXPORTER_PACKAGE_CHECKSUM: 'a2841d4cd2ab262d2e50192a2a32a9262afa8fc34680edb7531de042bab35328'
+PROMETHEUS_NODE_EXPORTER_OS: 'linux'
+PROMETHEUS_NODE_EXPORTER_ARCH: 'amd64'
+
+PROMETHEUS_NODE_EXPORTER_GROUP: 'prometheus'
+PROMETHEUS_NODE_EXPORTER_USER: 'prometheus'
+
+PROMETHEUS_NODE_EXPORTER_DIRS:
+  PROMETHEUS_BINARIES_DIR: '/opt/prometheus'
+  PROMETHEUS_CONFIGS_DIR: '/etc/prometheus'
+  PROMETHEUS_LOGS_DIR: '/var/log/prometheus'
+
+PROMETHEUS_NODE_EXPORTER_DIR_NAME: 'node_exporter-{{ PROMETHEUS_NODE_EXPORTER_VERSION }}.{{ PROMETHEUS_NODE_EXPORTER_OS }}-{{ PROMETHEUS_NODE_EXPORTER_ARCH }}'
+
+PROMETHEUS_CONFIG_FILE_NAME: 'prometheus.yml'
+
+PROMETHEUS_NODE_EXPORTER_PORT: '9100'
+
+PROMETHEUS_NODE_EXPORTER_MONITOR_RAID: false
+
+# Designed to work with https://gitlab.cyverse.org/config-mgmt/ansible-install-megacli
+PROMETHEUS_NODE_EXPORTER_RAID_OPTS: '-collector.megacli.command=/opt/MegaRAID/MegaCli/MegaCli -collectors.enabled=conntrack,diskstats,entropy,edac,filefd,filesystem,hwmon,infiniband,loadavg,mdadm,megacli,meminfo,netdev,netstat,sockstat,stat,textfile,time,uname,vmstat,wifi,zfs'

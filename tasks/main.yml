@@ -1,0 +1,56 @@
+---
+# tasks file for ansible-prometheus-node-exporter
+
+# Pre-install create user, dirs
+- name: Prometheus group created
+  group:
+    name: '{{ PROMETHEUS_GROUP }}'
+    state: present
+
+- name: Prometheus user created
+  user:
+    name: '{{ PROMETHEUS_USER }}'
+    group: '{{ PROMETHEUS_GROUP }}'
+    createhome: false
+    shell: '/sbin/nologin'
+    state: 'present'
+
+# Install and configure Prometheus Node Exporter
+- name: Prometheus Node Exporter directories created
+  file:
+    path: '{{ item }}'
+    state: 'directory'
+    owner: '{{ PROMETHEUS_USER }}'
+    group: '{{ PROMETHEUS_GROUP }}'
+    mode: 'u=rwx,g=rx,o='
+  with_items: '{{ PROMETHEUS_NODE_EXPORTER_DIRS.values() }}'
+
+- name: Prometheus Node Exporter binaries downloaded
+  get_url:
+    url: 'https://github.com/prometheus/prometheus/releases/download/v{{ PROMETHEUS_NODE_EXPORTER_VERSION }}/{{ PROMETHEUS_NODE_EXPORTER_DIR_NAME }}.tar.gz'
+    dest: '/tmp/{{ PROMETHEUS_NODE_EXPORTER_DIR_NAME }}.tar.gz'
+    checksum: 'sha256:{{ PROMETHEUS_NODE_EXPORTER_PACKAGE_CHECKSUM }}'
+
+- name: Prometheus Node Exporter binaries extracted
+  unarchive:
+    src: '/tmp/{{ PROMETHEUS_NODE_EXPORTER_DIR_NAME }}.tar.gz'
+    remote_src: true
+    dest: '{{ PROMETHEUS_DIRS.PROMETHEUS_BINARIES_DIR }}/{{ PROMETHEUS_NODE_EXPORTER_DIR_NAME }}'
+
+- name: Prometheus Node Exporter systemd unit file templated
+  template:
+    src: 'prometheus-node-exporter.service.j2'
+    dest: '/lib/systemd/system/prometheus-node-exporter.service'
+
+- name: Prometheus service enabled and started
+  systemd:
+    daemon_reload: true
+    name: 'prometheus-node-exporter'
+    enabled: true
+    state: 'started'
+
+- name: Hole poked through firewall
+  ufw:
+    rule: 'allow'
+    port: '{{ PROMETHEUS_NODE_EXPORTER_PORT }}'
+    proto: 'tcp'
