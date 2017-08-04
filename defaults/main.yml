@@ -23,4 +23,4 @@ PROMETHEUS_NODE_EXPORTER_PORT: '9100'
 PROMETHEUS_NODE_EXPORTER_MONITOR_RAID: false
 
 # Designed to work with https://gitlab.cyverse.org/config-mgmt/ansible-install-megacli
-PROMETHEUS_NODE_EXPORTER_RAID_OPTS: '-collector.megacli.command=/opt/MegaRAID/MegaCli/MegaCli -collectors.enabled=conntrack,diskstats,entropy,edac,filefd,filesystem,hwmon,infiniband,loadavg,mdadm,megacli,meminfo,netdev,netstat,sockstat,stat,textfile,time,uname,vmstat,wifi,zfs'
+PROMETHEUS_NODE_EXPORTER_RAID_OPTS: '-collector.megacli.command=/opt/MegaRAID/MegaCli/MegaCli64 -collectors.enabled=conntrack,diskstats,entropy,edac,filefd,filesystem,hwmon,infiniband,loadavg,mdadm,megacli,meminfo,netdev,netstat,sockstat,stat,textfile,time,uname,vmstat,wifi,zfs'
