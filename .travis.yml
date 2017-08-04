@@ -41,6 +41,11 @@ script:
   #   sudo docker exec test_dummy bash -c cat /tmp/hello.txt | grep -q 'hello'
   #   && (echo 'Test for role result: pass' && exit 0)
   #   || (echo 'Test for role result: fail' && exit 1)
+  - >
+    sudo docker exec test_dummy bash -c curl localhost:9100
+    && (echo "Test for node_exporter listening on port: pass && exit 0)
+    || (echo 'Test for role result: fail' && exit 1)
+
 
   # 4. Idempotence test (run playbook again to confirm nothing changes)
   - >
