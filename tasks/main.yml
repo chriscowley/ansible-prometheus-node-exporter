@@ -42,12 +42,12 @@
     src: 'prometheus-node-exporter.service.j2'
     dest: '/lib/systemd/system/prometheus-node-exporter.service'
 
-- name: Prometheus service enabled and started
+- name: Prometheus service enabled and restarted
   systemd:
     daemon_reload: true
     name: 'prometheus-node-exporter'
     enabled: true
-    state: 'started'
+    state: 'restarted'
 
 - name: Hole poked through firewall
   ufw:
