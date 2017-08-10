@@ -1,0 +1,9 @@
+# Run prometheus-node-exporter
+
+start on startup
+
+script
+    sudo -u {{ PROMETHEUS_NODE_EXPORTER_USER }} {{ PROMETHEUS_NODE_EXPORTER_DIRS.PROMETHEUS_BINARIES_DIR }}/{{ PROMETHEUS_NODE_EXPORTER_DIR_NAME }}/node_exporter \
+        -collector.textfile.directory {{ PROMETHEUS_NODE_EXPORTER_DIRS.PROMETHEUS_TEXTFILE_COLLECTOR_DIR }} {% if PROMETHEUS_NODE_EXPORTER_CUSTOM_OPTS is defined %}\
+        {{ PROMETHEUS_NODE_EXPORTER_CUSTOM_OPTS }} {% endif %}
+end script
