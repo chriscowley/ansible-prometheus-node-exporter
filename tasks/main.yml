@@ -15,7 +15,6 @@
     shell: '/sbin/nologin'
     state: 'present'
 
-# Install and configure Prometheus Node Exporter
 - name: Prometheus Node Exporter directories created
   file:
     path: '{{ item }}'
@@ -24,6 +23,10 @@
     group: '{{ PROMETHEUS_NODE_EXPORTER_GROUP }}'
     mode: 'u=rwx,g=rx,o='
   with_items: '{{ PROMETHEUS_NODE_EXPORTER_DIRS.values() }}'
+
+- name: Configure RAID monitoring with StorCLI
+  include: 'monitor_raid_storcli.yml'
+  when: 'PROMETHEUS_NODE_EXPORTER_MONITOR_STORCLI == true'
 
 - name: Prometheus Node Exporter binaries downloaded
   get_url:
@@ -42,7 +45,7 @@
     src: 'prometheus-node-exporter.service.j2'
     dest: '/lib/systemd/system/prometheus-node-exporter.service'
 
-- name: Prometheus service enabled and restarted
+- name: Prometheus Node Exporter service enabled and restarted
   systemd:
     daemon_reload: true
     name: 'prometheus-node-exporter'

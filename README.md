@@ -15,15 +15,15 @@ None
 Role Variables
 --------------
 
-| Variable                              | Required | Default   | Choices     | Comments                                    |
-|---------------------------------------|----------|-----------|-------------|---------------------------------------------|
-| PROMETHEUS_NODE_EXPORTER_MONITOR_RAID | no       | false     | true, false | Monitor RAID with MegaCLI                   |
-| PROMETHEUS_NODE_EXPORTER_CUSTOM_OPTS  | no       | undefined | string      | Additional options to pass to node_exporter |
+| Variable                                      | Required | Default   | Choices     | Comments                                    |
+|-----------------------------------------------|----------|-----------|-------------|---------------------------------------------|
+| PROMETHEUS_NODE_EXPORTER_MONITOR_RAID_STORCLI | no       | false     | true, false | Monitor RAID with StorCLI                   |
+| PROMETHEUS_NODE_EXPORTER_CUSTOM_OPTS          | no       | undefined | string      | Additional options to pass to node_exporter |
 
 Dependencies
 ------------
 
-None, but monitor_raid option designed to work with https://gitlab.cyverse.org/config-mgmt/ansible-install-megacli
+If `PROMETHEUS_NODE_EXPORTER_MONITOR_RAID_STORCLI` is set, storcli must be installed a la https://gitlab.cyverse.org/config-mgmt/ansible-install-storcli
 
 Example Playbook
 ----------------

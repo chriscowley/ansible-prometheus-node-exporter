@@ -1,0 +1,32 @@
+---
+
+- name: Node exporter repo downloaded
+  git:
+    repo: '{{ PROMETHEUS_NODE_EXPORTER_REPO }}'
+    dest: '/tmp/node_exporter_repo'
+    depth: '1'
+    force: 'yes'
+    update: 'yes'
+
+- name: storcli.py copied to prometheus dir
+  copy:
+    remote_src: true
+    src: '/tmp/node_exporter_repo/text_collector_examples/storcli.py'
+    dest: '{{ PROMETHEUS_NODE_EXPORTER_DIRS.PROMETHEUS_BINARIES_DIR }}/storcli.py'
+    mode: 'u+x'
+
+- name: Node exporter repo deleted
+  file:
+    path: '/tmp/node_exporter/repo'
+    state: 'absent'
+
+- name: storcli stat collection scheduled via cron
+  cron:
+    backup: true
+    minute: "*/10"
+    hour: "*"
+    name: 'Collect storcli stats'
+    job: '{{ PROMETHEUS_NODE_EXPORTER_STORCLI_STAT_COLLECTION_COMMAND }}'
+
+- name: Run first storcli stat collection
+  shell: '{{ PROMETHEUS_NODE_EXPORTER_STORCLI_STAT_COLLECTION_COMMAND }}'
