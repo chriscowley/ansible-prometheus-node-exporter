@@ -60,6 +60,10 @@
     state: 'restarted'
   when: 'ansible_service_mgr == "systemd"'
 
+- name: Upstart configuration reloaded
+  command: 'initctl reload-configuration'
+  when: 'ansible_service_mgr == "upstart"'
+
 - name: Prometheus Node Exporter service enabled and restarted (upstart)
   service:
     name: 'prometheus-node-exporter'
