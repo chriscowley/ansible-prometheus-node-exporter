@@ -14,8 +14,8 @@
     src: '/tmp/node_exporter_repo/text_collector_examples/storcli.py'
     dest: '{{ PROMETHEUS_NODE_EXPORTER_DIRS.PROMETHEUS_BINARIES_DIR }}/storcli.py'
     mode: 'u+x'
-    owner: '{{ PROMETHEUS_OPENSTACK_EXPORTER_USER }}'
-    group: '{{ PROMETHEUS_OPENSTACK_EXPORTER_GROUP }}'
+    owner: '{{ PROMETHEUS_NODE_EXPORTER_USER }}'
+    group: '{{ PROMETHEUS_NODE_EXPORTER_GROUP }}'
 
 
 - name: Node exporter repo deleted
