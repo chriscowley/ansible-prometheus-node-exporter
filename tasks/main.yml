@@ -44,13 +44,13 @@
   template:
     src: 'prometheus-node-exporter.service.j2'
     dest: '/lib/systemd/system/prometheus-node-exporter.service'
-  when: 'ansible_service_mgr == systemd'
+  when: 'ansible_service_mgr == "systemd"'
 
 - name: Prometheus Node Exporter upstart file templated
   template:
     src: 'prometheus-node-exporter.conf.j2'
     dest: '/etc/init/prometheus-node-exporter.conf'
-  when: 'ansible_service_mgr == upstart'
+  when: 'ansible_service_mgr == "upstart"'
 
 - name: Prometheus Node Exporter service enabled and restarted (systemd)
   systemd:
@@ -58,14 +58,14 @@
     name: 'prometheus-node-exporter'
     enabled: true
     state: 'restarted'
-  when: 'ansible_service_mgr == systemd'
+  when: 'ansible_service_mgr == "systemd"'
 
 - name: Prometheus Node Exporter service enabled and restarted (upstart)
   service:
     name: 'prometheus-node-exporter'
     enabled: true
     state: 'restarted'
-  when: 'ansible_service_mgr == upstart'
+  when: 'ansible_service_mgr == "upstart"'
 
 
 - name: Hole poked through firewall
