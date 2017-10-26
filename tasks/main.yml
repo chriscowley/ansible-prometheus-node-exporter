@@ -77,4 +77,4 @@
     rule: 'allow'
     port: '{{ PROMETHEUS_NODE_EXPORTER_PORT }}'
     proto: 'tcp'
-  when:
+  when: 'PROMETHEUS_NODE_EXPORTER_MANAGE_FW == true'
