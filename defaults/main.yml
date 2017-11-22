@@ -17,6 +17,11 @@ PROMETHEUS_NODE_EXPORTER_DIRS:
   PROMETHEUS_LOGS_DIR: '/var/log/prometheus'
   PROMETHEUS_TEXTFILE_COLLECTOR_DIR: '/var/lib/prometheus/node_exporter/textfile_collector'
 
+PROMETHEUS_NODE_EXPORTER_DIR: '/opt/node_exporter'
+PROMETHEUS_NODE_EXPORTER_CONF_DIR: '/etc/node_exporter'
+PROMETHEUS_NODE_EXPORTER_LOG_DIR: '/var/log/node_exporter'
+PROMETHEUS_TEXTFILE_COLLECTOR_DIR: '/var/lib/prometheus/node_exporter/textfile_collector'
+
 PROMETHEUS_NODE_EXPORTER_DIR_NAME: 'node_exporter-{{ PROMETHEUS_NODE_EXPORTER_VERSION }}.{{ PROMETHEUS_NODE_EXPORTER_OS }}-{{ PROMETHEUS_NODE_EXPORTER_ARCH }}'
 
 PROMETHEUS_CONFIG_FILE_NAME: 'prometheus.yml'

@@ -15,14 +15,37 @@
     shell: '/sbin/nologin'
     state: 'present'
 
-- name: Prometheus Node Exporter directories created
+- name: Prometheus Node Exporter basedir
   file:
-    path: '{{ item }}'
+    path: '{{ PROMETHEUS_NODE_EXPORTER_DIR }}'
     state: 'directory'
     owner: '{{ PROMETHEUS_NODE_EXPORTER_USER }}'
     group: '{{ PROMETHEUS_NODE_EXPORTER_GROUP }}'
     mode: 'u=rwx,g=rx,o='
-  with_items: '{{ PROMETHEUS_NODE_EXPORTER_DIRS.values() }}'
+
+- name: Prometheus Node Exporter conf dir
+  file:
+    path: '{{ PROMETHEUS_NODE_EXPORTER_CONF_DIR }}'
+    state: 'directory'
+    owner: '{{ PROMETHEUS_NODE_EXPORTER_USER }}'
+    group: '{{ PROMETHEUS_NODE_EXPORTER_GROUP }}'
+    mode: 'u=rwx,g=rx,o='
+
+- name: Prometheus Node Exporter log dir
+  file:
+    path: '{{ PROMETHEUS_NODE_EXPORTER_LOG_DIR }}'
+    state: 'directory'
+    owner: '{{ PROMETHEUS_NODE_EXPORTER_USER }}'
+    group: '{{ PROMETHEUS_NODE_EXPORTER_GROUP }}'
+    mode: 'u=rwx,g=rx,o='
+
+- name: Prometheus Node Exporter textfile dir
+  file:
+    path: '{{ PROMETHEUS_TEXTFILE_COLLECTOR_DIR }}'
+    state: 'directory'
+    owner: '{{ PROMETHEUS_NODE_EXPORTER_USER }}'
+    group: '{{ PROMETHEUS_NODE_EXPORTER_GROUP }}'
+    mode: 'u=rwx,g=rx,o='
 
 - name: Configure RAID monitoring with StorCLI
   include: 'monitor_raid_storcli.yml'
@@ -38,7 +61,7 @@
   unarchive:
     src: '/tmp/{{ PROMETHEUS_NODE_EXPORTER_DIR_NAME }}.tar.gz'
     remote_src: true
-    dest: '{{ PROMETHEUS_NODE_EXPORTER_DIRS.PROMETHEUS_BINARIES_DIR }}'
+    dest: '{{ PROMETHEUS_NODE_EXPORTER_DIR }}'
 
 - name: Prometheus Node Exporter systemd unit file templated
   template:
